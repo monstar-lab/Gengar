@@ -1,0 +1,8 @@
+UItest/result/*
+!00_design
+
+.DS_Store
+.sass-cache
+.cache
+/.bundle
+node_modules

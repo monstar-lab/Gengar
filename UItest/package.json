@@ -1,0 +1,28 @@
+{
+  "name": "uitest",
+  "version": "1.0.0",
+  "description": "uitest_with_browserstack",
+  "main": "index.js",
+  "scripts": {
+    "screenshot": "node bin/screenshot/index.js",
+    "compare": "node bin/compare/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.0.1",
+    "browserstack": "^1.5.0",
+    "fs-extra": "^0.30.0",
+    "gm": "^1.23.0",
+    "junk": "^1.0.3",
+    "lodash": "^4.15.0",
+    "moment": "^2.14.1",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "file-type": "^3.8.0",
+    "read-chunk": "^2.0.0",
+    "typescript": "^1.8.10"
+  }
+}
