@@ -1,26 +1,12 @@
 module.exports = {
   browserStackCredentials : {
-    username: "", // user name
-    password: "" // password or BrowserStack access key 
+    username: "",
+    password: ""
   },
-  sites : [
-    {
-      name:'U1_001_top',
-      url: 'https://monstar-lab.com/'
-    },
-    {
-      name:'U2_001_corp',
-      url: 'https://monstar-lab.com/corp/'
-    },
-    {
-      name:'U3_001_services',
-      url: 'https://monstar-lab.com/services/web/'
-    }
-  ],
   options : {
     win_res : "1280x1024",
     mac_res : "1280x1024",
-    wait_time : 20,
+    wait_time : 10,
     browsers : [
       {
         browser : "chrome",
@@ -28,12 +14,12 @@ module.exports = {
         os : "Windows",
         os_version : "10"
       },
-      {
-        browser : "firefox",
-        browser_version : "45.0",
-        os : "Windows",
-        os_version : "10"
-      },
+      // {
+      //   browser : "firefox",
+      //   browser_version : "45.0",
+      //   os : "Windows",
+      //   os_version : "10"
+      // },
       // {
       //   browser : 'ie',
       //   browser_version : '11.0',
@@ -59,7 +45,34 @@ module.exports = {
       //   os_version:"4.4"
       // }
     ]
-  }
+  },
+  sites : [
+    {
+      name:'U1_001_top',
+      image: '',
+      url: 'https://monstar-lab.com/global/'
+    },
+    {
+      name:'U2_001_corp',
+      image: '',
+      url: 'https://monstar-lab.com/global/work/try-it/'
+    },
+    {
+      name:'U3_001_services',
+      image: '',
+      url: 'http://dentsu-ho.com/?fixed_tag=Column'
+    },
+    {
+      name:'U4_001_works',
+      image: 'try',
+      url: 'https://monstar-lab.com/global/work/try-it/'
+    },
+    {
+      name:'U4_001_works',
+      image: 'apperrelation',
+      url: 'https://monstar-lab.com/global/work/apperrelation/'
+    },
+  ]
 }
 
 
