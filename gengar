@@ -1,0 +1,31 @@
+#!/bin/bash
+
+NODE_VERSION="6.5"
+SCRIPT_DIR=$(cd $(dirname $0);pwd)
+cd $SCRIPT_DIR
+
+case "$1" in
+    install)
+        echo -n 'BrowserStack Username ?> '
+        read BROWSER_STACK_USERNAME
+        echo -n 'BrowserStack Access Key ?> '
+        read BROWSER_STACK_ACCESS_KEY
+        BUFF=`cat UItest/bin/config/.setting.js | sed s/{BROWSER_STACK_USERNAME}/$BROWSER_STACK_USERNAME/g | sed s/{BROWSER_STACK_ACCESS_KEY}/$BROWSER_STACK_ACCESS_KEY/g`
+        echo "$BUFF" > UItest/bin/config/setting.js
+        docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm install
+        ;;
+
+    screenshot)
+        docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm run screenshot
+        ;;
+
+    compare)
+        docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm run compare
+        ;;
+
+    *)
+        echo 'Usage: gengar {install|screenshot|compare}'
+        exit 1
+esac
+
+exit 0
