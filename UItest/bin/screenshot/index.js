@@ -51,7 +51,12 @@ var test = function(sites) {
         var date = moment().format('MM_DD');
         var dir_exp = dir_root + '/' + date + '/' + site.name + '/';
         fs.mkdirsSync(dir_exp);
-        var image_name = screenshot.image_url.match(".+/(.+?)([\?#;].*)?$")[1]
+        if(site.image) {
+          var image_name = site.image + '_' + screenshot.image_url.match(".+/(.+?)([\?#;].*)?$")[1]
+        } else {
+          var image_name = screenshot.image_url.match(".+/(.+?)([\?#;].*)?$")[1]
+        }
+        
         download(screenshot.image_url, dir_exp + image_name, function() {
           console.log('complite    ============= ' + image_name + ' =============');
           next();
