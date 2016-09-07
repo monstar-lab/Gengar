@@ -4,28 +4,45 @@ NODE_VERSION="6.5"
 SCRIPT_DIR=$(cd $(dirname $0);pwd)
 cd $SCRIPT_DIR
 
-case "$1" in
-    install)
-        echo -n 'BrowserStack Username ?> '
-        read BROWSER_STACK_USERNAME
-        echo -n 'BrowserStack Access Key ?> '
-        read BROWSER_STACK_ACCESS_KEY
-        BUFF=`cat UItest/bin/config/.setting.js | sed s/{BROWSER_STACK_USERNAME}/$BROWSER_STACK_USERNAME/g | sed s/{BROWSER_STACK_ACCESS_KEY}/$BROWSER_STACK_ACCESS_KEY/g`
-        echo "$BUFF" > UItest/bin/config/setting.js
-        docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm install
-        ;;
+function usage {
+    cat << _BUFF_
+Usage: gengar [options]
+  -i install
+  -s run screenshot
+  -c run compare
+_BUFF_
+}
 
-    screenshot)
-        docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm run screenshot
-        ;;
+while getopts :isc OPTS
+do
+    case ${OPTS} in
+        i)
+            echo -n 'BrowserStack Username ?> '
+            read BROWSER_STACK_USERNAME
+            echo -n 'BrowserStack Access Key ?> '
+            read BROWSER_STACK_ACCESS_KEY
+            BUFF=`cat UItest/bin/config/.setting.js | sed s/{BROWSER_STACK_USERNAME}/$BROWSER_STACK_USERNAME/g | sed s/{BROWSER_STACK_ACCESS_KEY}/$BROWSER_STACK_ACCESS_KEY/g`
+            echo "$BUFF" > UItest/bin/config/setting.js
+            docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm install
+            exit 0
+            ;;
 
-    compare)
-        docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm run compare
-        ;;
+        s)
+            docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm run screenshot
+            exit 0
+            ;;
 
-    *)
-        echo 'Usage: gengar {install|screenshot|compare}'
-        exit 1
-esac
+        c)
+            docker run -t --rm -v $SCRIPT_DIR/UItest:/usr/src/UItest -w /usr/src/UItest node:$NODE_VERSION npm run compare
+            exit 0
+            ;;
 
-exit 0
+        *)
+            usage
+            exit 1
+            ;;
+  esac
+done
+
+usage
+exit 1
