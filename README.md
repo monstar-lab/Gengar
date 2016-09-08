@@ -1,271 +1,194 @@
-目次
+# 目次
 
-####  [1 概略](https://github.com/monstar-lab/uiux-group/tree/master/UItest#概略)
+#### [1. 概略](#概略)
 
-####  [2 install](https://github.com/monstar-lab/uiux-group/tree/master/UItest#install)
+#### [2. インストール](#インストール)
 
-####  [3 set up](https://github.com/monstar-lab/uiux-group/tree/master/UItest#set-up)
+#### [3. 実行](#実行)
 
-####  [4 config](https://github.com/monstar-lab/uiux-group/tree/master/UItest#config)
+#### [4. 設定](#設定)
 
 
 ## 概略
-UIテストのセットアップに関して、説明します。
-set up完了間で、30分ぐらいかかるかも
-セットアップが完了すると、指定したurlを指定したブラウザーでスクリーンショットを作成できます。
-browserstack apiを使用するため、browserstackのアカウントを取得してください。
-https://www.browserstack.com
+UIテストのセットアップに関して、説明します。  
+セットアップが完了すると、指定したurlを指定したブラウザーでスクリーンショットを作成できます。  
+[BrowserStack API](https://www.browserstack.com/screenshots/api)を使用するため、[BrowserStack](https://www.browserstack.com)のアカウントを取得してください。
+
+以下の技術を使用しています。
+
+##### [Node.js](https://nodejs.org/en/)
+
+サーバーサイドのJavaScriptです。
+
+##### [BrowserStack API](https://www.browserstack.com/screenshots/api)
+
+APIを利用してスクリーンショットをとっています。
+
+##### [npm browserstack](https://www.npmjs.com/package/browserstack)
+
+APIを使用するためのnode moduleです。
+
+##### [ImageMagick](http://www.imagemagick.org/script/)
+
+画像の重ね合わせに使用しています。
+
+##### [Docker](https://www.docker.com/)
+
+実行環境を素早く構築するため使用しています。
 
 
-以下の技術を使用しています
+## インストール
 
-#####  [node](https://nodejs.org/en/)
-
-nodeはnodeや
-
-#####  [nvm](https://github.com/creationix/nvm)
-nodeのバージョン管理
-nodeのバージョン管理さえできていれば、ツールは問いません。
-nodebrewでも構いません
-
-##### [browserstack api](https://www.browserstack.com/screenshots)
-
-apiを利用し、スクリーンショットをとっています。 
-
-##### [browserstack node](https://www.npmjs.com/package/browserstack) 
-
-apiを使用するためのnode module  
-
-##### [imageMagick](http://www.imagemagick.org/script/index.php)
-
-画像の重ね合わせに使用しています 
-
-
-必要に応じて、各ソフトをinstallしてください
-既にinstallされているかは、[install](https://github.com/monstar-lab/uiux-group/wiki/Design-Guild#install)に記述されている各コマンドを走らせてください。
-もし、 `command not found` と表示された場合はinstallされていません。
-
-## install
-
-* nvm
-* node
-* imageMagick
+* Docker
+* Gengar
 
 ***
 
-##### [nvm](https://github.com/creationix/nvm)
+##### [Docker](https://www.docker.com/)
 
-[参考](http://qiita.com/dribble13/items/e895208727c85ef9bc52#2-1)
+[Docker for Mac](https://docs.docker.com/docker-for-mac/) (推奨) や [Docker Toolbox](https://www.docker.com/products/docker-toolbox) をインストールして`docker`コマンドを使用可能にします。
 
-`git clone git://github.com/creationix/nvm.git ~/.nvm`
+**Success**
 
-`if [[ -s /Users/ホームディレクトリ/.nvm/nvm.sh ]] ; then source /Users/ホームディレクトリ/.nvm/nvm.sh ; fi`
+`docker`コマンドが使用可能になります。
 
-
-**success**
-
-`nvm`コマンドが使用可能になります
-
-`nvm --version`
-
-0.31.4
+```
+$ docker -v
+Docker version 1.12.1, build 23cf638, experimental
+```
 
 ***
 
+##### [Ganger](https://github.com/monstar-lab/Gengar)
 
-##### [node](https://nodejs.org/en/)
-
-[参考](http://qiita.com/dribble13/items/e895208727c85ef9bc52#2-2)
-
-`nvm ls` 
+Gengar本体を任意のフォルダに[ダウンロード](https://github.com/monstar-lab/Gengar/archive/master.zip)して解凍します。
 
 ```
-         system
-default -> v0.12.5
-           v0.10.5
-node -> stable (-> v6.3.1) (default)
-stable -> 6.3 (-> v6.3.1) (default)
-iojs -> N/A (default)
-lts/* -> lts/argon (-> N/A)
-lts/argon -> v4.4.7 (-> N/A)
+$ curl -LO https://github.com/monstar-lab/Gengar/archive/master.zip
+$ unzip master.zip
+$ rm master.zip
+$ cd Gengar-master/
+$ ls -l
+README.md	UItest		compare		gengar		install		screenshot
 ```
-
-現在の使用バージョンを確認しください
-
-`nvm install v6.3.1`
-
-バージョン管理を行うため、nvmからnodeをinstallしてください
-
-`nvm use v6.3.1`
-
-```
-        v0.12.5
-->       v6.3.1
-         system
-default -> v6.3.1
-node -> stable (-> v6.3.1) (default)
-stable -> 6.3 (-> v6.3.1) (default)
-iojs -> N/A (default)
-lts/* -> lts/argon (-> N/A)
-lts/argon -> v4.4.7 (-> N/A)
-```
-
-
-**success**
-
-`node`コマンドが使用可能になり、指定したnodeのバージョンが表示されます
-
-`node -v`
-
-v6.3.1
 
 ***
 
-##### [imageMagick](http://www.imagemagick.org/script/index.php)
+## 実行
 
-[参考](http://qiita.com/tomomomo1217/items/79f516fc0c483e68f444)
-
-**success**
-
-`convert`コマンドが使用可能になります
-
-`convert`
-
-Version: ImageMagick 6.9.1-6 Q16 x86_64 2015-06-22 http://www.imagemagick.org
-Copyright: Copyright (C) 1999-2015 ImageMagick Studio LLC
-....
-
-***
-
-
-
-
-## set up
-
-初期状態ではディレクトリーの構成は以下になっています
-
+初期状態では下記のようなフォルダ構成になっています。
 
 ```
-UItest
+UItest/
 ├── README.md
-├── bin /
+├── bin/
 │   ├── config/
-│   │   └── setting.js //　←　編集してね
-│   └── ...
-└── package.json
-
-```
-* setting.jsのbrowserStackCredentialsを自身のbrowserstackのアカウントに変更してください。
-```
-module.exports = {
-  browserStackCredentials : {
-    username: "your user name",
-    password: "your user password or your access key"
-  },
-  ..
-```
-* UItestのディレクトリーまで移動し、`npm install`
-
-```
-cd /your path/your path/your path/UItest
-npm install
-```
-**success**
-
-`node_modules`ファイルが作成されます
-
-```
-UItest
-├── README.md
-├── bin /
-│   ├── config/
-│   │   └── setting.js
+│   │   └── .setting.js
 │   └── ...
 ├── result
 │   └── 00_design/
-├── node_modules //　←　new!!
-└── package.json 
+└── package.json
 ```
-***
 
-* スクリーンショット
+`install`を実行してGengarに必要な設定を行います。
 
 ```
-npm run screenshot
+$ ./install [or ./gengar -i]
+BrowserStack Username ?> ********
+BrowserStack Access Key ?> ****************
+...
 ```
+
 **success**
 
-`result`以下に`日付`ファイルが作成さ、以下にスクリーンショットが格納されます。
-5分ぐらいかかる
+`bin/config/setting.js`と`node_modules/`が作成されます。
 
 ```
-UItest
+UItest/
 ├── README.md
-├── bin /
+├── bin/
+│   ├── config/
+│   │   ├── .setting.js
+│   │   └── setting.js ← new!
+│   └── ...
+├── result
+│   └── 00_design/
+├── node_modules/ ← new!
+└── package.json
+```
+
+***
+
+#### スクリーンショットを作成する
+
+```
+$ ./screenshot [or ./gengar -s]
+```
+
+**success**
+
+`result/`以下に`日付`フォルダが作成され、スクリーンショットが格納されます。  
+※1枚当たり1分程かかります。
+
+```
+UItest/
+├── README.md
+├── bin/
 │   ├── config/
 │   │   └── setting.js
 │   └── ...
-├── node_modules
+├── node_modules/
 ├── package.json
-└── result
-    ├── 00_design
-    └── 08_18 //　←　new!!
-        ├── page_name_1
+└── result/
+    ├── 00_design/
+    └── MM_DD/ ← new!
+        ├── page_name_1/
         │   ├── browser_1.jpg
         │   └── browser_2.jpg
-        └── page_name_2
+        └── page_name_2/
             ├── browser_1.jpg
             └── browser_2.jpg
 ```
+
 ***
 
-* 比較画像
+#### 比較画像を作成する
 
 ```
-npm run compare
+$ ./compare [or ./gengar -c]
 ```
+
 **success**
 
-`result`以下の日付ファイル以下に、`compare`ファイルが作成される
+`result/`以下の`日付`フォルダに`compare`フォルダが作成されます。
 
 ```
-UItest
+UItest/
 ├── README.md
-├── bin /
+├── bin/
 │   ├── config/
 │   │   └── setting.js
 │   └── ...
-├── node_modules
+├── node_modules/
 ├── package.json
-└── result
-    ├── 00_design　//　←　比較元の画像を入れてください。日付以下のpage_nameとを同じ画像名にしてください
-    └── 08_18 //　←　new!!
-        ├── page_name_1
+└── result/
+    ├── 00_design/ ← 比較元の画像を入れてください。日付フォルダのpage_nameとを同じ画像名にしてください。
+    └── MM_DD/
+        ├── page_name_1/
+        │   ├── compare/ ← new!
         │   ├── browser_1.jpg
-        │   ├── browser_2.jpg
-        │   └── compare/  //　←　new!!
-        └── page_name_2
-            ├── browser_1.jpg
+        │   └── browser_2.jpg
+        └── page_name_2/
+            ├── compare/ ← new!
+            └── browser_1.jpg
             └── browser_2.jpg
-            └── compare/  //　←　new!!
 ```
+
 ***
 
+## 設定
 
+`bin/config/setting.js`を編集することで、対応ブラウザや、URLを変更することができます。
 
-## config
-
-`UI:UX/UItest/bin/config/setting.js`を編集することで、対応ブラウザーや、urlを変更することができます。
-
-[browser option](https://www.browserstack.com/list-of-browsers-and-platforms?product=screenshots)
-
-[browser size option](https://www.browserstack.com/screenshots/api)
-
-
-
-
-
-
-
-
-
+[Browser option](https://www.browserstack.com/list-of-browsers-and-platforms?product=screenshots)  
+[Browser size option](https://www.browserstack.com/screenshots/api)
