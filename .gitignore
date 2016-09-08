@@ -1,5 +1,6 @@
 UItest/bin/config/setting.js
 UItest/result/*
+UItest/npm-debug.log
 !00_design
 
 .DS_Store
